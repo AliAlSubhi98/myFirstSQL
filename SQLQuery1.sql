@@ -114,3 +114,23 @@ WHERE product_name LIKE '%iphone%'
  VALUES ( 3,  'The Dark Knight','Christopher Nolan', 'Action', 2008);
 
  SELECT * FROM movies
+
+ CREATE TABLE inventory (
+    product_id INTEGER PRIMARY KEY,
+    product_name TEXT,
+    supplier TEXT,
+    category TEXT,
+    quantity INTEGER,
+    price REAL,
+);
+INSERT INTO inventory  VALUES (1, 'iPhone 13', 'Apple Inc.', 'Electronics', 10, 999.99);
+
+INSERT INTO inventory  VALUES (2, 'Kindle Paperwhite', 'Amazon', 'Books & Media', 20, 129.99);
+
+INSERT INTO inventory  VALUES (3, 'Nike Air Max 90', 'Nike Inc.', 'Apparel', 5, 119.99);
+
+SELECT * FROM inventory;
+
+SELECT * FROM inventory WHERE category LIKE 'Electronics';
+
+SELECT * FROM inventory WHERE quantity > 5;
