@@ -45,4 +45,4 @@ ORDER BY sale_id DESC
 /*TASK6. Write a SQL query that shows the sales between 01-01-2022 and 01-02-2022.
 */
 SELECT * FROM SALES 
-WHERE sale_date BETWEEN '01-01-2022' AND '01-02-2022'
+WHERE sale_date BETWEEN '2022-01-01' AND '2022-02-01'
