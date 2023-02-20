@@ -71,6 +71,7 @@ INSERT INTO customers
 VALUES (3,'Bob Brown','bob.brown@example.com','555-555-3434');
 
 SELECT * FROM customers
+ORDER BY customer_ID DESC /* order it descending*/
 
 SELECT * FROM customers /*  retrieve only the information for customer with specific email */
 WHERE email LIKE 'jane.doe@example.com'
@@ -134,3 +135,19 @@ SELECT * FROM inventory;
 SELECT * FROM inventory WHERE category LIKE 'Electronics';
 
 SELECT * FROM inventory WHERE quantity > 5;
+
+CREATE TABLE sales (
+  sale_id INT PRIMARY KEY,
+  sale_date DATE,
+  sale_amount DECIMAL(10,2)
+);
+INSERT INTO sales ( sale_id,sale_date, sale_amount)
+VALUES
+  (1,'2022-01-01', 100.00),
+  (2,'2022-01-02', 50.00),
+  (3,'2022-01-15', 75.00),
+  (4,'2022-02-01', 200.00),
+  (5,'2022-02-05', 150.00),
+  (6,'2022-02-20', 175.00);
+
+  SELECT * FROM sales
