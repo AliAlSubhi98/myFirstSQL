@@ -53,4 +53,10 @@ INSERT INTO salary_grade VALUES
 (4,2101,3100),
 (5,3101,9999);
 
+/* Return complete information about the employees */
 SELECT * FROM employeess
+
+/* Write a SQL query to find the salaries of all employees. Return salary.*/
+SELECT emp_name, salary FROM employeess
+
+/*  Write a SQL query to find the unique designations of the employees. Return job name.*/
