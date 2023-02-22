@@ -120,3 +120,57 @@ FROM employeess
 WHERE salary > 3000
 
 /* Write a SQL query to find out which employees joined in the month of January. Return complete information about the employees.*/
+SELECT * , FORMAT(hire_date, 'MMMM')AS 'MONTH_Hire' FROM employeess
+WHERE FORMAT(hire_date, 'MMMM') like 'January'
+ 
+/* Write a SQL query to separate the names of employees and their managers by the string 'works for'.*/
+SELECT CONCAT(emp_name , ' works for' , manager_id)
+FROM employeess 
+
+/* Write a SQL query to find those employees whose designation is ‘CLERK’. Return complete information about the employees.*/
+SELECT * FROM employeess 
+WHERE job_name LIKE 'CLERK'
+
+/* Write a SQL query to identify employees with more than 27 years of experience. Return complete information about the employees.*/
+SELECT *
+FROM employeess
+WHERE DATEDIFF(YEAR, hire_date, GETDATE()) >= 27;
+
+/*  Write a SQL query to find those employees whose salaries are less than 3500. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE salary < 3500
+
+/* Write a SQL query to find the employee whose designation is ‘ANALYST’. Return employee name, job name and salary.*/
+SELECT emp_name , job_name , salary 
+FROM employeess
+WHERE job_name LIKE 'ANALYST'
+
+/* Write a SQL query to identify those employees who joined the company in 1991. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE FORMAT(hire_date,'yyyy') = 1991
+/*OR*/
+SELECT * FROM employeess
+WHERE YEAR(hire_date) = 1991
+
+/* Write a SQL query to identify those employees who joined the company after 1991. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE FORMAT(hire_date,'yyyy') > 1991
+/*OR*/
+SELECT * FROM employeess
+WHERE YEAR(hire_date) > 1991
+
+/* Write a SQL query to find those employees who joined before 1st April 1991. Return employee ID, employee name, hire date and salary.*/
+SELECT emp_id, emp_name, hire_date, salary
+FROM employeess
+WHERE hire_date < '1991-04-01';
+
+/* Write a SQL query identify the employees who do not report to a manager. Return employee name, job name.*/
+SELECT emp_name , job_name 
+FROM employeess
+WHERE manager_id IS NULL
+
+/* Write a SQL query to find the employees who joined on the 1st of May 1991. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE hire_date = '1991-5-1'
+
+/*Write a SQL query to identify the experience of the employees who work under the manager whose ID number is 68319. Return employee ID, employee name, salary, experience*/
