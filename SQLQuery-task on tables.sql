@@ -78,3 +78,45 @@ SELECT COUNT(emp_name) FROM employeess
 WHERE salary > 2200
 
 /* Write a SQL query to find the unique jobs with their corresponding department id. */
+SELECT DISTINCT job_name, dep_id FROM employeess 
+
+/* Write a SQL query to find those employees who do not belong to the department 2001. Return complete information about the employees. */
+SELECT * FROM employeess
+WHERE dep_id<>2001
+
+/* Write a SQL query to find those employees who joined before 1991. Return complete information about the employees */
+SELECT * FROM employeess
+WHERE hire_date < ('1991')
+
+/* Write a SQL query to calculate the average salary of employees who work as analysts. Return average salary.*/
+SELECT avg(salary) FROM employeess
+WHERE job_name LIKE 'ANALYST'
+
+/*  Write a SQL query to find the details of the employees who's name start start with B or end with E */
+SELECT * FROM employeess
+WHERE emp_name LIKE 'b%'
+OR emp_name LIKE '%e'
+
+/*  Write a SQL query to find the details of the employees who's department name start start with B or end with E*/
+SELECT E.*, D.dep_name 
+FROM employeess E , departments D
+WHERE dep_name LIKE 'b%'
+OR dep_name LIKE '%e'
+
+/*Write a SQL query to find the details of the employees who's department location start start with F or end with N*/
+SELECT E.* , D.dep_location
+FROM employeess E, departments D
+WHERE dep_location LIKE 'f%'
+OR dep_location LIKE '%n'
+
+/*  Write a SQL query to identify employees whose commissions exceed their salaries. Return complete information about the employees, department location and department name */
+SELECT E.* , D.dep_location , D.dep_name
+FROM employeess E, departments D
+WHERE commission > salary
+
+/* Write a SQL query to identify those employees whose salaries exceed 3000 after receiving a 25% salary increase */
+SELECT emp_id , emp_name , ((salary*0.25) + salary)
+FROM employeess
+WHERE salary > 3000
+
+/* Write a SQL query to find out which employees joined in the month of January. Return complete information about the employees.*/
