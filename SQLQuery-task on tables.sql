@@ -60,3 +60,21 @@ SELECT * FROM employeess
 SELECT emp_name, salary FROM employeess
 
 /*  Write a SQL query to find the unique designations of the employees. Return job name.*/
+SELECT DISTINCT job_name FROM employeess
+
+/*  Write a SQL query to list the employees’ name, increased their salary by 15% */
+SELECT emp_name ,(salary*0.15 + salary)
+FROM employeess
+
+/* Write a SQL query to list the employee's name and job name as a format of "Employee & Job" */
+SELECT emp_name+' & '+job_name AS "Employee & Job" FROM employeess
+/*  Write a SQL query to find those employees with hire date in the format like February 22, 1991. Return employee ID, employee name, salary, hire date.*/
+SELECT emp_id, emp_name, salary, FORMAT(hire_date, 'MMMM dd, yyyy') AS hire_date_formatted
+FROM employeess
+WHERE hire_date BETWEEN '1991-01-01' AND '1991-12-31';
+
+/* Write a SQL query to count the number of employees who have total income more than 2200 */
+SELECT COUNT(emp_name) FROM employeess
+WHERE salary > 2200
+
+/* Write a SQL query to find the unique jobs with their corresponding department id. */
