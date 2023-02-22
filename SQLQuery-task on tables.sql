@@ -174,3 +174,39 @@ SELECT * FROM employeess
 WHERE hire_date = '1991-5-1'
 
 /*Write a SQL query to identify the experience of the employees who work under the manager whose ID number is 68319. Return employee ID, employee name, salary, experience*/
+SELECT emp_id , emp_name , salary ,  year (getdate())- year (hire_date) as experience
+FROM employeess
+WHERE emp_id = 68319
+/*OR*/
+SELECT emp_id , emp_name , salary , DATEDIFF(YEAR, hire_date, GETDATE()) AS experience
+FROM employeess
+WHERE emp_id = 68319
+
+/*  Write a SQL query to find out which employees earn more than 100 per day as a salary. Return employee ID, employee name, salary, and experience.*/
+SELECT emp_id , emp_name , salary , DATEDIFF(YEAR, hire_date, GETDATE()) AS experience , (salary/30) as salary_per_day
+FROM employeess
+WHERE (salary/30) > 100
+
+/* Write a SQL query to identify those employees who retired after 31-Dec-99, completing eight years of service. Return employee name. */
+SELECT emp_name FROM employeess
+WHERE DATEADD(year, 8, hire_date) <= '1999-12-31'
+
+/* Write a SQL query to identify the employees whose salaries are odd. Return complete information about the employee */
+SELECT * FROM employeess
+WHERE (salary % 2) = 1 
+
+/* Write a SQL query to identify employees whose salaries contain only three digits. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE salary between 100 AND 999
+
+/* Write a SQL query to find those employees who joined in the month of APRIL. Return complete information about the employees*/
+SELECT * FROM employeess
+WHERE MONTH (hire_date) = 4
+
+/*  Write a SQL query to find out which employees joined the company before the 19th of the month. Return complete information about the employees*/
+SELECT * FROM employeess
+WHERE DAY(hire_date) < 19
+
+/* */
+
+
