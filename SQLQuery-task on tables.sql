@@ -207,6 +207,49 @@ WHERE MONTH (hire_date) = 4
 SELECT * FROM employeess
 WHERE DAY(hire_date) < 19
 
-/* */
+/* Write a SQL query to identify those employees who have been working as a SALESMAN and month portion of the experience is more than 10. Return complete information about the employees. */
+SELECT * FROM employeess
+WHERE job_name like 'SALESMAN'
+AND DATEDIFF( MONTH , hire_date , GETDATE())/2 > 10
 
+/* Write a SQL query to find those employees of department id 3001 or 1001 and joined in the year 1991. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE dep_id = 3001 OR dep_id =1001
 
+/*  Write a SQL query to find the employees who are working for the department ID 1001 or 2001. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE dep_id = 1001 OR dep_id =2001
+
+/* Write a SQL query to find those employees whose designation is ‘CLERK’ and work in the department ID 2001. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE job_name LIKE 'CLERK'
+AND dep_id = 2001
+
+/* Write a SQL query to find those employees who are either CLERK or MANAGER. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE job_name IN ('CLERK' ,'MANAGER')
+
+/* Write a SQL query to identify those employees who joined in any month other than February. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE MONTH(hire_date) <> 1
+
+/* Write a SQL query to identify the employees who joined the company in June 1991. Return complete information about the employees. */
+SELECT * FROM employeess 
+WHERE hire_date BETWEEN '1991-06-01' AND '1991-06-30';
+/*OR*/
+SELECT * FROM employeess
+WHERE hire_date LIKE '1991-06-%';
+
+/* Write a SQL query to search for all employees with an annual salary between 24000 and 50000 (Begin and end values are included.). Return complete information about the employees.*/
+SELECT * , (salary*12)AS annual_salary FROM employeess 
+WHERE (salary*12) BETWEEN 24000 AND 50000
+
+/*  Write a SQL query to identify all employees who joined the company on 1st May, 20th February, and 3rd December 1991. Return complete information about the employees.*/
+SELECT * FROM employeess 
+WHERE hire_date like '%____-05-01' OR hire_date like '%____-02-20' OR hire_date like '1991-12-03'
+
+/* 98-Write a SQL query to identify departments with fewer than four employees. Return department ID, number of employees.*/
+SELECT dep_id , count(emp_id)
+FROM employeess 
+GROUP BY dep_id
+HAVING count (dep_id) < 4
