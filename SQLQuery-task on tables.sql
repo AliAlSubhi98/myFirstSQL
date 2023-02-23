@@ -249,7 +249,51 @@ SELECT * FROM employeess
 WHERE hire_date like '%____-05-01' OR hire_date like '%____-02-20' OR hire_date like '1991-12-03'
 
 /* 98-Write a SQL query to identify departments with fewer than four employees. Return department ID, number of employees.*/
-SELECT dep_id , count(emp_id)
-FROM employeess 
-GROUP BY dep_id
-HAVING count (dep_id) < 4
+
+SELECT d.dep_id, COUNT(e.emp_id) AS num_employees
+FROM departments d
+LEFT JOIN employeess e ON d.dep_id = e.dep_id
+GROUP BY d.dep_id
+HAVING COUNT(e.emp_id) < 4;
+
+/*  Write a SQL query to find out which employees are working under the managers 63679, 68319, 66564, or 69000. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE manager_id IN (63679, 68319, 66564, 69000)
+
+/* Write a SQL query to find those employees who joined in 90's. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE hire_date LIKE '199%'
+
+/* Write a SQL query to find those managers who are in the department 1001 or 2001. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE job_name = 'MANAGER'
+AND dep_id IN (1001 , 2001)
+
+/* Write a SQL query to identify employees who joined in the month of FEBRUARY with a salary range of 1001 to 2000 (Begin and end values are included.). Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE MONTH(hire_date) = 2
+AND salary BETWEEN 1000 AND 2001
+
+/* Write a SQL query to find those employees who joined before or after the year 1991. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE YEAR(hire_date) <> 1991
+
+/* Write a SQL query to find employees along with their department details. Return employee ID, employee name, job name, manager ID, hire date, salary, commission, department ID, and department name.*/
+SELECT E.* , departments.dep_name
+FROM employeess E 
+INNER JOIN departments on E.dep_id = departments.dep_id
+
+/* Write a SQL query to identify those employees who earn 60000 or more per year or do not work as ANALYST. Return employee name, job name, (12*salary) as Annual Salary, department ID, and grade.*/
+SELECT E.emp_name, E.job_name, E.salary*12 AS Annual_salary, E.dep_id, D.dep_name, S.grade
+FROM employeess E, departments D, salary_grade S
+WHERE (E.dep_id = D.dep_id)  AND (E.salary*12 >= 60000 OR job_name <> 'ANALYST')
+AND (E.salary BETWEEN S.min_salary AND S.max_salary)
+
+/* Write a SQL query to identify employees whose salaries are higher than their managers' salaries. Return employee name, job name, manager ID, salary, manager name, manager's salary*/
+SELECT E.emp_name , E.job_name , E.manager_id , E.salary , M.emp_name as manager_name, M.salary AS manager_salary
+FROM employeess E
+INNER JOIN employeess M 
+on E.manager_id = M.emp_id 
+WHERE e.salary > m.salary;
+
+/**/
