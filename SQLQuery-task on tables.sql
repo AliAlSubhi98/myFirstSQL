@@ -322,3 +322,67 @@ AND E.hire_date < '1992-12-31'
 EXEC show_emp
 
 /* Write a SQL query to find those employees whose manager name is JONAS. Return employee id, employee name, job name, manager ID, hire date, salary, department ID, employee name.*/
+SELECT E.emp_id ,E.emp_name,E.job_name,E.manager_id,E.hire_date,E.salary,E.dep_id, M.emp_id AS manager_id, M.emp_name AS manager_name
+FROM employeess E
+LEFT JOIN employeess M ON E.manager_id = M.emp_id
+WHERE M.emp_name LIKE 'JONAS'
+
+/* Write a SQL query to find the name and salary of the employee FRANK. Salary should be equal to the maximum salary within his or her salary group.*/
+SELECT E.emp_name , E.salary , s.grade
+FROM employeess E
+RIGHT JOIN salary_grade S ON E.salary BETWEEN S.min_salary AND S.max_salary
+WHERE E.salary = S.max_salary
+And emp_name LIKE 'FRANK'
+/*OR*/
+SELECT emp_name, MAX(s.max_salary) AS max_salary
+FROM employeess e
+JOIN salary_grade s ON e.salary BETWEEN s.max_salary AND s.max_salary
+WHERE emp_name = 'FRANK'
+GROUP BY emp_name;
+/*  Write a SQL query to search for employees who are working either as a MANAGER or an ANALYST with a salary between 2000 and 5000 (Begin and end values are included.) 
+without commissions. Return complete information about the employees.*/
+SELECT * FROM employeess
+WHERE job_name IN ('MANAGER', 'ANALYST')
+AND salary BETWEEN 2000 AND 5000
+AND commission IS NULL;
+
+/* From the following table, write a SQL query to find the employees who joined in 1991 and whose department location is SYDNEY or MELBOURNE with a salary range of 2000 to 5000.
+Return employee ID, employee name, department ID, salary, and department location.*/
+SELECT E.emp_id, e.emp_name ,e.dep_id , e.salary , D.dep_location
+FROM employeess E 
+JOIN departments D ON D.dep_id = E.dep_id
+WHERE YEAR(hire_date) = 1991
+AND D.dep_location IN ('SYDNEY' , 'MELBOURNE')
+AND salary BETWEEN 2000 AND 5000
+
+/*  Write a SQL query to find the employees of MARKETING department come from MELBOURNE or PERTH, are in grades 3 ,4, and 5 and have at least 25 years of experience.
+Return department ID, employee ID, employee name, salary, department name, department location and grade.*/
+SELECT D.dep_id , e.emp_id , e.emp_name , e.salary , d.dep_name , d.dep_location , s.grade
+FROM  employeess E 
+LEFT JOIN departments D ON e.dep_id = D.dep_id 
+LEFT JOIN salary_grade S ON E.salary BETWEEN S.min_salary and s.max_salary
+WHERE dep_location IN ('MELBOURNE' , 'PERTH')
+AND grade IN (3,4,5) 
+AND DATEDIFF(YEAR , hire_date , GETDATE()) >= 25
+
+/* Write a SQL query to find those employees who are senior to their manager. Return complete information about the employees.*/
+SELECT e.emp_id, e.emp_name, e.job_name, e.manager_id, e.hire_date, e.salary, e.commission, e.dep_id
+FROM employeess e
+JOIN employeess m ON e.manager_id = m.emp_id
+WHERE e.hire_date < m.hire_date
+
+/*OR*/
+
+SELECT E.* 
+From employeess E
+LEFT JOIN employeess M ON  m.emp_id = e.manager_id 
+WHERE E.job_name = 'PRESIDENT' 
+ 
+
+
+
+
+
+exec show_emp
+
+
