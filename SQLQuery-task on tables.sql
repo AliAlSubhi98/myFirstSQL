@@ -52,6 +52,12 @@ INSERT INTO salary_grade VALUES
 (3,1501,2100),
 (4,2101,3100),
 (5,3101,9999);
+/* show employees table by (EXEC show_emp)*/
+CREATE PROCEDURE show_emp
+AS
+BEGIN
+SELECT * FROM employeess
+END
 
 /* Return complete information about the employees */
 SELECT * FROM employeess
@@ -296,4 +302,23 @@ INNER JOIN employeess M
 on E.manager_id = M.emp_id 
 WHERE e.salary > m.salary;
 
-/**/
+/* Write a SQL query to find those employees whose salary is between 2000 and 5000 (Begin and end values are included.) and location is PERTH. Return employee name, department ID, salary, and commission*/
+SELECT E.emp_name , E.dep_id , E.salary , E.commission , D.dep_location
+FROM employeess E
+INNER JOIN departments D
+on D.dep_id = E.dep_id
+WHERE D.dep_location LIKE 'PERTH'
+
+/* Write a SQL query to find the employees whose department ID is 1001 or 3001 and whose salary grade is not 4. They joined the company before 1992-12-31. Return grade, employee name.*/
+
+SELECT E.emp_name, S.grade
+FROM employeess E
+JOIN salary_grade S ON E.salary BETWEEN S.min_salary AND S.max_salary
+WHERE E.dep_id IN (1001, 3001)
+AND S.grade <> 4
+AND E.hire_date < '1992-12-31'
+
+/*to show employeess table*/
+EXEC show_emp
+
+/* Write a SQL query to find those employees whose manager name is JONAS. Return employee id, employee name, job name, manager ID, hire date, salary, department ID, employee name.*/
