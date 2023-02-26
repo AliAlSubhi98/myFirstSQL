@@ -378,6 +378,107 @@ From employeess E
 LEFT JOIN employeess M ON  m.emp_id = e.manager_id 
 WHERE E.job_name = 'PRESIDENT' 
  
+/* Write a SQL query to determine which employees have a grade of 4 and a salary between the minimum and maximum. Return all information of each employees and their grade and salary related details*/
+SELECT e.* , s.grade
+FROM employeess e
+join salary_grade S ON e.salary BETWEEN s.min_salary AND s.max_salary
+WHERE grade = 4
+
+/* Write a SQL query to find those employees who joined after 1991, excluding MARKER or ADELYN in the departments PRODUCTION or AUDIT. Return employee name.*/
+SELECT E.emp_name 
+FROM employeess E
+join departments D on D.dep_id = E.dep_id
+WHERE E.hire_date > '1991-01-01' 
+AND emp_name NOT IN ('MARKER', 'ADELYN') 
+AND dep_name NOT IN ('PRODUCTION','AUDIT')
+
+/* Write a SQL query to find the employees and their salaries. Sort the result-set in ascending order by salaries. Return complete information about the employees.*/
+SELECT *
+FROM employeess
+ORDER BY salary ASC;
+
+/* Write a SQL query to list employees in ascending order on department ID and descending order on jobs. Return complete information about the employees.*/
+SELECT *
+FROM employeess
+ORDER BY dep_id ASC , job_name DESC
+
+/* Write a SQL query to sort the unique jobs in descending order. Return job name.*/
+SELECT DISTINCT job_name
+FROM employeess
+ORDER BY job_name DESC;
+
+/* Write a SQL query to rank the employees according to their annual salary in ascending order. Return employee ID, employee name, monthly salary, salary/30 as Daily_Salary, and 12*salary as Anual_Salary.*/
+SELECT e.emp_id, e.emp_name, e.salary, e.salary/30 as Daily_Salary, 12*salary as Anual_Salary
+FROM employeess e
+ORDER BY Anual_Salary ASC
+/*OR*/
+SELECT emp_id, emp_name, salary/12 AS monthly_salary, salary/30 AS daily_salary, salary*12 AS annual_salary,
+RANK() OVER (ORDER BY salary*12 ASC) AS rank
+FROM employeess
+
+/* Write a SQL query to find those employees who are either 'CLERK' or 'ANALYST’. Sort the result set in descending order on job_name. Return complete information about the employees.*/
+SELECT E.* 
+FROM employeess E
+WHERE job_name IN ('CLERK','ANALYST')
+ORDER BY job_name DESC
+
+/* Write a SQL query to find the department location of employee ‘CLARE’. Return department location.*/
+SELECT dep_location
+FROM employeess E
+JOIN departments D ON D.dep_id = E.dep_id 
+WHERE E.emp_name LIKE 'CLARE'
+
+/* Write a SQL query to find those employees who joined on 1-MAY-91, or 3-DEC-91, or 19-JAN-90. Sort the result-set in ascending order by hire date. Return complete information about the employees.*/
+SELECT E.* 
+FROM employeess E
+WHERE e.hire_date IN ('1-MAY-91' ,'3-DEC-91' , '19-JAN-90')
+ORDER BY e.hire_date ASC;
+
+/* Write a SQL query to find those employees who earn less than 1000. Sort the result-set in ascending order by salary. Return complete information about the employees.*/
+SELECT E.* 
+FROM employeess E
+WHERE e.salary < 1000 
+ORDER BY E.salary ASC
+
+/* Write a SQL query to list the employees in ascending order based on salary. Return complete information about the employees.*/
+SELECT E.* 
+FROM employeess E
+ORDER BY E.salary ASC
+
+/* Write a SQL query to list the employees in the ascending order by job title and in descending order by employee ID. Return complete information about the employees.*/
+SELECT E.* 
+FROM employeess E
+ORDER BY E.job_name ASC, E.emp_id DESC
+
+/* Write a SQL query to list the unique jobs of department 2001 and 3001 in descending order. Return job name.*/
+SELECT DISTINCT E.job_name
+FROM employeess E 
+JOIN departments D ON D.dep_id = E.dep_id
+WHERE D.dep_id IN (2001 , 3001)
+ORDER BY E.job_name DESC;
+
+/* Write a SQL query to list all the employees except the PRESIDENT and the MANAGER in ascending order of salaries. Return complete information about the employees.*/
+SELECT E.* 
+FROM employeess E
+WHERE job_name NOT IN ('PRESIDENT','MANAGER')
+ORDER BY salary ASC
+
+/* Write a SQL query to find the employees whose annual salary is less than $25,000 per year. Sort the result set in ascending order of the salary. Return complete information about the employees.*/
+SELECT *, 12*salary as annual_salary
+FROM employeess
+WHERE 12*salary < 25000
+ORDER BY salary ASC;
+
+/* Write a SQL query to list the employees who works as a SALESMAN. Sort the result set in ascending order of annual salary. Return employee id, name, annual salary, daily salary of all the employees.*/
+SELECT E.emp_id, E.emp_name , E.salary*12 AS annual_salary , E.salary/30 AS daily_salary
+FROM employeess E
+WHERE E.job_name LIKE 'SALESMAN'
+
+/* Write a SQL query to list the employee ID, name, hire date, current date and experience of the employees in ascending order on their experiences.*/
+
+
+
+
 
 
 
