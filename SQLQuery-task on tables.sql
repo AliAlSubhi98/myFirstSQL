@@ -475,15 +475,143 @@ FROM employeess E
 WHERE E.job_name LIKE 'SALESMAN'
 
 /* Write a SQL query to list the employee ID, name, hire date, current date and experience of the employees in ascending order on their experiences.*/
+SELECT E.emp_id , E.emp_name , E.hire_date , GETDATE() AS 'CURRENT_DATE' , DATEDIFF(YEAR ,hire_date,getdate()) AS experience
+FROM employeess E
+ORDER BY experience ASC
+
+/* Write a SQL query to list the employees in ascending order of designations of those joined after the second half of 1991.*/
+SELECT * FROM employeess
+WHERE hire_date BETWEEN '1991-09-01' AND '1991-12-31'
+
+/*Write a SQL query to find the location of all the employees working in the FINANCE or AUDIT department. Sort the result-set in ascending order by department ID. Return complete information about the employees.*/
+SELECT E.* 
+FROM employeess E
+JOIN departments D ON D.dep_id= E.dep_id
+WHERE D.dep_name IN ('FINANCE' ,'AUDIT')
+
+/* Write a SQL query to find the employees along with grades in ascending order. Return complete information about the employees.*/
+SELECT E.* , grade
+FROM employeess E
+JOIN salary_grade S ON E.salary BETWEEN S.min_salary AND S.max_salary
+ORDER BY grade
+
+/* Write a SQL query to find the employees according to the department in ascending order. Return name, job name, department, salary, and grade.*/
+SELECT E.emp_name , E.job_name , D.dep_name , E.salary , grade
+FROM employeess E
+JOIN departments D ON D.dep_id = E.dep_id
+JOIN salary_grade S ON E.salary BETWEEN S.min_salary AND S.max_salary
+ORDER BY dep_name ASC
+
+/* Write a SQL query to select all employees except CLERK and sort the results in descending order by salary. Return employee name, job name, salary, grade and department name.*/
+SELECT E.emp_name , e.job_name , e.salary , grade , dep_name
+FROM employeess E
+JOIN salary_grade S ON E.salary BETWEEN S.min_salary AND S.max_salary
+JOIN departments D ON D.dep_id = E.dep_id
+WHERE job_name NOT IN ('CLERK') 
+
+/* Write a SQL query to find those employees who work in the department 1001 or 2001. Return employee ID, name, salary, department, grade, experience, and annual salary.*/
+SELECT E.emp_id, E.emp_name , e.salary , dep_name , grade ,DATEDIFF(YEAR, hire_date, GETDATE())as experience , salary*12 AS annual_salary
+FROM employeess E
+JOIN salary_grade S ON E.salary BETWEEN S.min_salary AND S.max_salary
+JOIN departments D ON D.dep_id = E.dep_id
+WHERE D.dep_id IN (1001 , 2001)
+
+/* Write a SQL query to list the details of the employees along with the details of their departments.*/
+SELECT E.emp_name , D.*
+FROM employeess E
+JOIN departments D ON D.dep_id = E.dep_id
+
+/*85- Write a SQL query to list the employees who are senior to their MANAGERS. Return complete information about the employees.*/
 
 
 
+/* Write a SQL query to find those employees who work in the department 1001. Sort the result-set in ascending order by salary. Return employee ID, employee name, salary and department ID.*/
+SELECT E.emp_id , E.emp_name , E.salary , E.dep_id
+FROM employeess E
+WHERE dep_id = 1001
 
+/* Write a SQL query to find the second highest salary. Return second highest salary.*/
+SELECT salary 
+FROM (
+  SELECT DISTINCT salary, RANK() OVER (ORDER BY salary DESC) AS salary_rank
+  FROM employeess
+) AS ranked_employees
+WHERE salary_rank = 2
+/*google answer*/
+SELECT MAX(salary) AS second_highest_salary
+FROM employeess
+WHERE salary < (SELECT MAX(salary) FROM employeess)
+/*google answer*/
+SELECT TOP 1 Salary
+FROM (
+  SELECT DISTINCT TOP 2 Salary
+  FROM EmployeesS
+  ORDER BY Salary DESC
+) AS second_highest_salary
+ORDER BY Salary ASC;
+/*google answer*/
+SELECT salary 
+FROM employeess
+ORDER BY salary DESC
+OFFSET 1 ROW
+FETCH NEXT 1 ROW ONLY
 
+/* Write a SQL query to calculate the average salary and average total remuneration (salary and commission) for each type of job. Return name, average salary and average total remuneration.*/
+SELECT job_name,
+       avg(salary),
+       avg(salary+commission)
+FROM employeess
+GROUP BY job_name;
+/*correct answer*/
+SELECT job_name, 
+       AVG(salary) AS avg_salary, 
+       AVG(salary + COALESCE(commission,0)) AS avg_total_remuneration
+FROM employeess
+GROUP BY job_name;
 
+/* Write a SQL query to calculate the total annual salary distributed across each job in 1991. Return job name, total annual salary.*/
 
+SELECT job_name, sum(12*salary)
+FROM employeess
+WHERE year(hire_date) = '1991'
+GROUP BY job_name;
 
+/* Write a SQL query to list the employee id, name, department id, location of all the employees.*/
+SELECT E.emp_id, e.emp_id , e.dep_id , d.dep_location
+FROM employeess E
+join departments D ON D.dep_id = E.dep_id
 
+/* Write a SQL query to find those employees who work in the department ID 1001 or 2001. Return employee ID, employee name, department ID, department location, and department name.*/
+SELECT E.emp_id, e.emp_name , e.dep_id , d.dep_location , d.dep_name
+FROM employeess E
+join departments D ON D.dep_id = E.dep_id
+WHERE e.dep_id IN ('1001','2001')
+
+/* Write a SQL query to find those employees whose salary is in the range of minimum and maximum salary. Return employee ID, name, salary and grade.*/
+SELECT e.emp_id, e.emp_name, e.salary, s.grade
+FROM employeess E, salary_grade S
+WHERE e.salary BETWEEN S.min_salary AND S.max_salary ;
+
+/* Write a SQL query to create a list of the managers and the number of employees they supervise. Sort the result set in ascending order on manager. Return manager ID and number of employees under them.*/
+
+SELECT M.emp_id , COUNT(*) AS num_employees
+FROM employeess E
+JOIN employeess M ON M.emp_id = E.manager_id
+WHERE M.job_name = 'MANAGER'
+GROUP BY M.emp_id
+ORDER BY M.emp_id ASC
+
+/* Write a SQL query to count the number of employees in each designation of a department. Return department id, job name and number of employees.*/
+
+/**/
+/**/
+/**/
+/**/
 exec show_emp
+/**/
+
+SELECT COUNT(emp_id)
+from employeess
+
 
 
